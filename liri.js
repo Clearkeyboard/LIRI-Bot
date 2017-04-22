@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var keys = require("./keys.js");
 //Grabs API keys from file
 var request = require("request");
@@ -45,4 +46,3 @@ function tweeting(){
 function spotify(){
     var song = process.argv[3];
     var queryURL = 'https://api.spotify.com/v1/search
-}
