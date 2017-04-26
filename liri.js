@@ -36,7 +36,18 @@ function tweeting(){
     var params = {screen_name: 'Clearkeyboard', count: 20};
     client.get('statuses/user_timeline', params, function(error, tweets, response){
         if (!error){
-            console.log(JSON.parse(response.body));
+        //forEach loop that 
+        console.log(' ');
+        console.log('================ My Tweets ================');
+        tweets.forEach(function(obj) {
+          console.log('--------------------------');
+          console.log('Time: ' + obj.created_at);
+          console.log('Tweet: ' + obj.text);
+          console.log('--------------------------');
+          console.log(' ');
+        });
+        console.log('===========================================');
+        console.log(' ');
         }else{console.log("Twitter User Not Found or No Tweets to show")}
     });
 };
@@ -55,9 +66,13 @@ function spotify(){
         var artist = data.tracks.items[0].artists[0].name;
         var title = data.tracks.items[0].name;
         var album = data.tracks.items[0].album.name;
-        console.log(artist);
-        console.log(title);
-        console.log(album);
+        console.log(' ');
+        console.log('================ Spotify This ================');
+        console.log("Artist: " + artist);
+        console.log("Song: " + title);
+        console.log("Album: " + album);
+        console.log('===========================================');
+        console.log(' ');
         }else{console.log("Spotify Error or No Track Found")}
     })
 }
@@ -78,16 +93,41 @@ function movie(){
             var actors = "Starring: " + JSON.parse(data).Actors;
             var tomato = "More Info: " + JSON.parse(data).tomatoURL;
             //Prints JSON nodes
+            console.log(' ');
+            console.log('================ Movie This ================');
             console.log(title);
-            console.log(year);
-            console.log(imdb);
-            console.log(country);
-            console.log(language);
-            console.log(plot);
-            console.log(actors);
-            console.log(tomato);
-
+            console.log("Released: " + year);
+            console.log("IMDB Rating: " + imdb);
+            console.log("Produced in: " + country);
+            console.log("Available in: " + language);
+            console.log("Synopsis: " + plot);
+            console.log("Starring: " + actors);
+            console.log("More Info: " + tomato);
+            console.log('===========================================');
+            console.log(' ');
     }else{console.log(error)}
 });
 }
+function fsRandom() {
 
+    fs.readFile("random.txt", "utf8", function(err, random_txt) {
+
+        var ran_txt = random_txt.split(',');
+        var func = ran_txt[0];
+        var param = ran_txt[1];
+
+        console.log("PARAM: ", param);
+
+        switch (func) {
+            case "my-tweets":
+                tweeting();
+                break;
+            case "spotify-this-song":
+                spotify(param);
+                break;
+            case "movie-this":
+                movie(param);
+                break;
+        }
+    });
+}
